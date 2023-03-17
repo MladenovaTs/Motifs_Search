@@ -24,15 +24,15 @@ args = parser.parse_args()
 args.seq = args.seq.upper()                 # Note we just added this line
 
 ## It uses the re module to search the input sequence for a pattern that matches either DNA or RNA. It does this by searching for the presence of either 'T' or 'U', which are specific to DNA and RNA, respectively. If it finds 'T', it declares the sequence as DNA; if it finds 'U', it declares the sequence as RNA. If it finds neither 'T' nor 'U', it declares that the sequence could be either DNA or RNA. If the sequence contains any characters that are not A, C, G, T, or U, it declares the sequence as neither DNA nor RNA. ##
-if re.search('^[ACGTU]+$', args.seq):
-    if re.search('T', args.seq):
-        print ('The sequence is DNA')
-    elif re.search('U', args.seq):
-        print ('The sequence is RNA')
+if re.search('^[ACGTU]*$', args.seq):
+    if 'T' in args.seq and 'U' not in args.seq:
+        print(f'The sequence "{args.seq}" is DNA')
+    elif 'U' in args.seq and 'T' not in args.seq:
+        print(f'The sequence "{args.seq}" is RNA')
     else:
-        print ('The sequence can be DNA or RNA')
+        print(f'The sequence "{args.seq}" can be DNA or RNA')
 else:
-    print ('The sequence is not DNA nor RNA')
+    print(f'The sequence "{args.seq}" is not DNA nor RNA')
 
 ## Finally, if the optional "--motif" argument is provided, the script searches for the motif in the input sequence using the re module. It prints a message indicating whether the motif was found or not. ##
 if args.motif:
